@@ -4,7 +4,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -43,7 +43,7 @@ namespace ariel
         vector<T> inorder;
         vector<T> preorder;
         vector<T> postorder;
-        map<T, Node *> nodes_map;
+        unordered_map<T, Node *> nodes_map;
         void in_order(Node *r);
 
         void post_order(Node *r);
@@ -57,7 +57,13 @@ namespace ariel
             in_order(root);
             for (auto &&i : inorder)
             {
-                delete nodes_map[i];
+               
+            
+             if (nodes_map.count(i)>0)
+             {
+                 delete nodes_map[i];
+             }
+             nodes_map.erase(i);         
             }
         }
         BinaryTree<T> &add_root(T r);
@@ -70,11 +76,6 @@ namespace ariel
         {
             inorder.clear();
             in_order(root);
-            // for (auto &&i : inorder)
-            // {
-            //     cout << i << ",";
-            // }
-            // cout<<"\n";
 
             return inorder.begin();
         }
@@ -86,11 +87,7 @@ namespace ariel
         {
             inorder.clear();
             in_order(root);
-            // for (auto &&i : inorder)
-            // {
-            //     cout << i << ",";
-            // }
-            // cout<<"\n";
+      
             return inorder.begin();
         }
         iterator end_inorder()
@@ -101,11 +98,7 @@ namespace ariel
         {
             preorder.clear();
             pre_order(root);
-            // for (auto &&i : preorder)
-            // {
-            //     cout << i << ",";
-            // }
-            // cout<<"\n";
+
             return preorder.begin();
         }
         iterator end_preorder()
@@ -116,11 +109,7 @@ namespace ariel
         {
             postorder.clear();
             post_order(root);
-            // for (auto &&i : postorder)
-            // {
-            //     cout << i << ",";
-            // }
-            // cout<<"\n";
+
             return postorder.begin();
         }
         iterator end_postorder()
@@ -183,29 +172,13 @@ namespace ariel
         }
         else
         {
-            // const iterator it = nodes_map.find(root->value);
-            // if (it != nodes_map.end())
-            // {
 
-            //     std::swap(nodes_map[r], it->second);
-            //     nodes_map.erase(it);
-            // }
-            // nodes_map[r] = new Node(r);
-            // T t=root->value;
-            // nodes_map[r]->right = root-right;
-            // nodes_map[r]->left = root-left;
-            // root=nodes_map[r];
-            // delete nodes_map[t];
-            // nodes_map.erase(t);
             root->value=r;
             nodes_map[r]=root;
             
 
         }
-        //   for (auto &i : nodes_map)
-        //     {
-        //         cout<<"r="<<r<<" key="<<i.first<<*(i.second)<<"\n";
-        //     }
+
             
 
         return *this;
@@ -227,21 +200,12 @@ namespace ariel
         }
         else
         {
-            // const iterator it = nodes_map.find(ex->right->value);
-            // if (it != nodes_map.end())
-            // {
 
-            //     std::swap(nodes_map[add], it->second);
-            //     nodes_map.erase(it);
-            // }
             ex->right->value = add;
             nodes_map[add] = ex->right;
             
         }
-        //   for (auto &i : nodes_map)
-        //     {
-        //         cout<<"add="<<add<<" key="<<i.first<<*(i.second)<<"\n";
-        //     }
+
             
 
         return *this;
@@ -262,25 +226,11 @@ namespace ariel
         }
         else
         {
-            // const iterator it = nodes_map.find(ex->left->value);
-            // if (it != nodes_map.end())
-            // {
 
-            //     std::swap(nodes_map[add], it->second);
-            //     nodes_map.erase(it);
-            // }
             ex->left->value = add;
             nodes_map[add] = ex->left;
         }
-        // if (add==2)
-        // {
-            // for (auto &i : nodes_map)
-            // {
-            //     cout<<"add="<<add<<" key="<<i.first<<*(i.second)<<"\n";
-            // }
-            
-            /* code */
-        // }
+   
         
         return *this;
     }

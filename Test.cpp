@@ -445,6 +445,7 @@ TEST_CASE("string test")
     CHECK(res == s);
     res = "";
     string ex;
+   
     for (unsigned int i = s.length() - 1; i >= 0; i--)
     {
         ex += s[i];
@@ -464,4 +465,5 @@ TEST_CASE("string test")
         res += (*it);
     }
     CHECK(res == ex);
+     
 }
